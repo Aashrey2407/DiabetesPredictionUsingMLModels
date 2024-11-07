@@ -47,8 +47,12 @@
             -webkit-appearance: none;
             margin: 0;
         }
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
         button {
-            width: 100%;
+            flex: 1;
             padding: 12px;
             background-color: #4CAF50;
             color: white;
@@ -73,7 +77,7 @@
 <body>
 
     <div class="container">
-        <h1>Diabetes Type Prediction</h1>
+        <h1>Diabetes Prediction</h1>
         
         <label for="age">Age:</label>
         <input type="number" id="age" placeholder="Enter age" required>
@@ -92,8 +96,11 @@
             <option value="naive_bayes">Naive Bayes</option>
             <option value="perceptron">Perceptron</option>
         </select>
+        <div class = "button-container">
+            <button onclick="predictDiabetes()">Submit</button>
+            <button onclick="clearFields()">Clear the fields</button>
+        </div>
         
-        <button onclick="predictDiabetes()">Predict Diabetes Type</button>
         
         <div id="result"></div>
     </div>
@@ -121,7 +128,7 @@
                 bmi: parseFloat(bmi),
                 model_type: modelType
             };
-
+            
             try {
                 // Send a POST request to the Flask API
                 const response = await fetch('http://127.0.0.1:5000/predict', {
@@ -147,6 +154,12 @@
                 // Display any network errors
                 document.getElementById('result').innerText = "Error: Could not connect to server.";
             }
+        }
+        function clearFields(){
+            document.getElementById('age').value = '';
+            document.getElementById('glucose').value = '';
+            document.getElementById('insulin').value = '';
+            document.getElementById('bmi').value = '';
         }
     </script>
 
